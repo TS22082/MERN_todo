@@ -13,8 +13,7 @@ import About from "./Components/Pages/About";
 function App() {
   const [tasks, setTasks] = useState();
   const [newText, updateNewText] = useState();
-  const [editedText, updateEditText] = useState({ editText: "", id: "" });
-  const [deleteText, updateDeleteText] = useState({ deleteText: "" });
+  const [activeTask, updateActiveTask] = useState();
 
   const retrieveTasks = () => {
     axios
@@ -23,7 +22,6 @@ function App() {
       .catch((err) => console.log(err));
   };
 
-  //force update
   const newTextChange = (e) => {
     updateNewText({ ...newText, [e.target.name]: e.target.value });
   };
@@ -34,13 +32,13 @@ function App() {
   };
 
   const editTextChange = (e) => {
-    updateEditText({ ...editedText, [e.target.name]: e.target.value });
+    updateActiveTask({ ...activeTask, [e.target.name]: e.target.value });
   };
 
   const editTextSubmit = (e) => {
     e.preventDefault();
     axios
-      .patch("/edit", { id: editedText.id, text: editedText.editText })
+      .patch("/edit", { id: activeTask._id, text: activeTask.text })
       .catch((err) => {
         console.log(err);
       });
@@ -53,19 +51,17 @@ function App() {
   return (
     <Router>
       <Nav links={[<Link to="/">Home</Link>, <Link to="/about">About</Link>]} />
-
       <Switch>
         <Route exact path="/edit/:id">
           <Edit
-            updateEditText={updateEditText}
+            updateEditText={updateActiveTask}
             editTextChange={editTextChange}
             editTextSubmit={editTextSubmit}
-            retrieveTasks={retrieveTasks}
-            editedText={editedText}
+            editedText={activeTask}
           />
         </Route>
         <Route exact path="/delete/:id">
-          <Delete deleteText={deleteText} updateDeleteText={updateDeleteText} />
+          <Delete deleteText={activeTask} />
         </Route>
         <Route exact path="/">
           <Home
@@ -73,6 +69,7 @@ function App() {
             tasks={tasks}
             newTextChange={newTextChange}
             newTextSubmit={newTextSubmit}
+            updateActiveTask={updateActiveTask}
           />
         </Route>
         <Route exact path="/about">

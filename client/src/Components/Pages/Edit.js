@@ -1,26 +1,11 @@
 import React from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { useEffect } from "react";
-import axios from "axios";
+import { useHistory } from "react-router-dom";
 import Form from "../Form/Form";
 import Card from "../Card/Card";
 import Button from "../Button/Button";
 import Container from "../Container/Container";
 
 const Edit = (props) => {
-  let { id } = useParams();
-
-  useEffect(() => {
-    const updateEditText = props.updateEditText;
-
-    axios
-      .get(`/find/${id}`)
-      .then((res) => {
-        updateEditText({ id: id, editText: res.data.text });
-      })
-      .catch((err) => console.log(err));
-  }, [id, props.updateEditText]);
-
   const history = useHistory();
 
   return (
@@ -29,8 +14,8 @@ const Edit = (props) => {
         title="Editing: are you sure?"
         form={
           <Form
-            textValue={props.editedText.editText}
-            inputName={"editText"}
+            textValue={props.editedText.text}
+            inputName={"text"}
             handleChange={props.editTextChange}
             handleSubmit={(e) => {
               props.editTextSubmit(e);

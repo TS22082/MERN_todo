@@ -19,12 +19,18 @@ const Home = (props) => {
         <Button
           color="teal"
           text="edit"
-          click={() => history.push(`/edit/${task._id}`)}
+          click={() => {
+            props.updateActiveTask({ ...task, index: id });
+            history.push(`/edit/${task._id}`);
+          }}
         />
         <Button
           color="red"
           text="delete"
-          click={() => history.push(`/delete/${task._id}`)}
+          click={() => {
+            props.updateActiveTask({ ...task, index: id });
+            history.push(`/delete/${task._id}`);
+          }}
         />
       </Card>
     ));
