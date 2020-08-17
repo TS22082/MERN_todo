@@ -44,15 +44,11 @@ function App() {
       });
   };
 
-  useEffect(() => {
-    retrieveTasks();
-  }, []);
-
   return (
     <Router>
       <Nav links={[<Link to="/">Home</Link>, <Link to="/about">About</Link>]} />
       <Switch>
-        <Route exact path="/edit/:id">
+        <Route exact path="/edit">
           <Edit
             updateEditText={updateActiveTask}
             editTextChange={editTextChange}
@@ -60,7 +56,7 @@ function App() {
             editedText={activeTask}
           />
         </Route>
-        <Route exact path="/delete/:id">
+        <Route exact path="/delete">
           <Delete deleteText={activeTask} />
         </Route>
         <Route exact path="/">

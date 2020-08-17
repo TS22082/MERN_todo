@@ -10,8 +10,9 @@ const Home = (props) => {
 
   useEffect(() => {
     const retrieveTasks = props.retrieveTasks;
+    console.log("this is happening");
     retrieveTasks();
-  }, [props.retrieveTasks]);
+  }, []);
 
   const showTasks = () => {
     const arr = props.tasks.map((task, id) => (
@@ -21,7 +22,7 @@ const Home = (props) => {
           text="edit"
           click={() => {
             props.updateActiveTask({ ...task, index: id });
-            history.push(`/edit/${task._id}`);
+            history.push("/edit");
           }}
         />
         <Button
@@ -29,7 +30,7 @@ const Home = (props) => {
           text="delete"
           click={() => {
             props.updateActiveTask({ ...task, index: id });
-            history.push(`/delete/${task._id}`);
+            history.push("/delete");
           }}
         />
       </Card>
