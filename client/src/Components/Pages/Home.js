@@ -9,9 +9,8 @@ const Home = (props) => {
   const history = useHistory();
 
   useEffect(() => {
-    const retrieveTasks = props.retrieveTasks;
-    console.log("this is happening");
-    retrieveTasks();
+    props.retrieveTasks();
+    // eslint-disable-next-line
   }, []);
 
   const showTasks = () => {
